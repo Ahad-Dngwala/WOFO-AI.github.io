@@ -5,7 +5,6 @@
  */
 
 const MAX_CHUNK_SIZE = 1000;   // Ideal for embeddings
-const MIN_CHUNK_SIZE = 200;
 const OVERLAP_SIZE = 150;
 
 function normalizeText(text) {
@@ -38,14 +37,14 @@ function chunkText(rawText, options = {}) {
     if ((buffer + " " + sentence).length <= MAX_CHUNK_SIZE) {
       buffer += " " + sentence;
     } else {
-      if (buffer.length >= MIN_CHUNK_SIZE) {
+      if (buffer.length > 0) {
         chunks.push(buildChunk(buffer, documentId, chunkIndex++, source));
       }
       buffer = sentence;
     }
   }
 
-  if (buffer.length >= MIN_CHUNK_SIZE) {
+  if (buffer.length > 0) {
     chunks.push(buildChunk(buffer, documentId, chunkIndex,source));
   }
 
